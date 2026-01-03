@@ -308,7 +308,7 @@ OPTION (RECOMPILE);
 
     </div>
 
-     <div class="card">
+    <div class="card">
       <h2>Portfolio — Projects & Queries</h2>
 
       <details>
@@ -453,6 +453,28 @@ GROUP BY EmpID, CAST(AttendanceDate AS date);
 </code></pre>
         <p><strong>Why:</strong> Supports KPIs for punctuality and shift coverage.</p>
       </details>
+    </div>
+
+    <div class="card">
+      <h2>Operational Topics (Backup, Recovery, Maintenance)</h2>
+        
+      <details><summary>Database Backup &amp; Restore</summary><p>What it is: Commands to back up and restore SQL Server databases.</p><p>Why: Essential for disaster recovery and compliance.</p><pre><code>BACKUP DATABASE MyDB TO DISK = 'C:\Backups\MyDB_Full.bak';
+
+      RESTORE DATABASE MyDB FROM DISK = 'C:\Backups\MyDB_Full.bak' WITH REPLACE;</code></pre></details>
+
+      <details><summary>Transaction Log Backup &amp; Point-in-Time Recovery</summary><p>What it is: Log backups allow restoring to a specific point in time.</p><p>Why: Minimizes data loss during recovery.</p><pre><code>BACKUP LOG MyDB TO DISK = 'C:\Backups\MyDB_Log.trn';
+
+      RESTORE DATABASE MyDB FROM DISK = 'C:\Backups\MyDB_Full.bak' WITH NORECOVERY;
+      RESTORE LOG MyDB FROM DISK = 'C:\Backups\MyDB_Log.trn' WITH RECOVERY;</code></pre></details>
+
+      <details><summary>Database Maintenance (Index &amp; Stats)</summary><p>What it is: Rebuild indexes and update statistics for performance.</p><p>Why: Keeps queries fast and plans accurate.</p><pre><code>ALTER INDEX ALL ON Orders REBUILD;
+      UPDATE STATISTICS Orders;</code></pre></details>
+
+      <details><summary>Security &amp; Roles</summary><p>What it is: Grant least privilege using roles.</p><p>Why: Protect sensitive data and enforce access control.</p><pre><code>CREATE ROLE ReportingRole;
+      GRANT SELECT ON dbo.SalesSummary TO ReportingRole;</code></pre></details>
+
+      <details><summary>Monitoring &amp; Alerts</summary><p>What it is: Use DMVs and alerts to monitor performance.</p><p>Why: Detect issues early and maintain SLAs.</p><pre><code>SELECT * FROM sys.dm_exec_requests WHERE status = 'running';</code></pre></details><details><summary>High Availability Concepts</summary><p>What it is: Techniques like AlwaysOn Availability Groups or Log Shipping.</p><p>Why: Ensures uptime and resilience in enterprise environments.</p><pre><code>Conceptual topic: configure replicas and automatic failover.</code></pre></details></div>
+
     </div>
 
   </div>
