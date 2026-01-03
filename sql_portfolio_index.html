@@ -1,0 +1,460 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Zawata Afnan Ahmed — SQL Server Portfolio (Updated)</title>
+  <style>
+    :root {
+      --bg:#f7fafc; /* light gray */
+      --card:#ffffff; /* white */
+      --text:#1f2937; /* gray-800 */
+      --muted:#4b5563; /* gray-600 */
+      --accent:#0ea5e9; /* sky-500 */
+      --accent2:#16a34a; /* green-600 */
+      --codebg:#f1f5f9; /* slate-100 */
+      --border:#e5e7eb; /* gray-200 */
+    }
+    * { box-sizing: border-box; }
+    body { margin: 0; font-family: system-ui, -apple-system, Segoe UI, Roboto, Ubuntu, Cantarell, "Noto Sans", "Helvetica Neue", Arial, "Apple Color Emoji", "Segoe UI Emoji"; background: var(--bg); color: var(--text); }
+    a { color: var(--accent); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+    .container { max-width: 1080px; margin: 0 auto; padding: 24px; }
+    header { display:flex; flex-wrap:wrap; gap: 16px; align-items: center; justify-content: space-between; padding: 16px 0; border-bottom: 1px solid var(--border); }
+    .title { font-size: 1.9rem; font-weight: 800; }
+    .badge { display:inline-block; padding: 6px 10px; border:1px solid var(--border); border-radius: 999px; color: var(--muted); background:#fff; margin-right:8px; }
+    .card { background: var(--card); border:1px solid var(--border); border-radius: 14px; padding: 18px; margin: 18px 0; box-shadow: 0 1px 4px rgba(0,0,0,0.06); }
+    .card h2 { margin: 0 0 8px; font-size: 1.35rem; }
+    details { border:1px solid var(--border); border-radius: 10px; padding: 10px; background: #ffffff; }
+    details + details { margin-top: 10px; }
+    summary { cursor: pointer; font-weight: 700; color: var(--accent); }
+    pre { background: var(--codebg); color: #111827; padding: 12px; border-radius: 8px; overflow:auto; border:1px solid var(--border); }
+    code { font-family: ui-monospace, SFMono-Regular, Menlo, Monaco, Consolas, "Liberation Mono", "Courier New", monospace; font-size: 0.94rem; }
+    .footer { margin-top: 24px; font-size: 0.9rem; color: var(--muted); }
+    .pill { display:inline-block; padding: 6px 10px; border-radius:999px; background:#fff; border:1px solid var(--border); margin:4px; color:#334155; }
+    .section-title { font-size:1.15rem; font-weight:800; margin-top: 12px; }
+    .mini { color: var(--muted); font-size:0.95rem; }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <div>
+        <div class="title">SQL Server Portfolio — Zawata Afnan Ahmed</div>
+        <div>
+          <span class="badge">Sydney, NSW</span>
+          <span class="badge">Email: <a href="mailto:zawata09@gmail.com">zawata09@gmail.com</a></span>
+          <span class="badge">LinkedIn: <a href="https://linkedin.com/in/zawata-afnan-ahmed" target="_blank">/in/zawata-afnan-ahmed</a></span>
+        </div>
+      </div>
+    </header>
+
+    <div class="card">
+      <h2>About</h2>
+      <p>Results-driven Software Developer with 5+ years of international experience across banking, ERP, manufacturing, and web APIs. Below are <strong>topics I have worked with in my previous roles</strong>, each including: what it is, a short explanation, and a sample query or T-SQL pattern.</p>
+      <div>
+        <span class="pill">SQL Server</span>
+        <span class="pill">T-SQL</span>
+        <span class="pill">Query Optimization</span>
+        <span class="pill">Stored Procedures</span>
+        <span class="pill">Azure SQL</span>
+        <span class="pill">SSMS</span>
+        <span class="pill">Agile</span>
+      </div>
+    </div>
+
+    <div class="card">
+      <h2>Topics & Examples (Worked in Prior Roles)</h2>
+
+      <details>
+        <summary>Filtering Before vs After Aggregation (WHERE vs HAVING)</summary>
+        <p><strong>What it is:</strong> Filtering rows before aggregation vs filtering grouped results after aggregation.</p>
+        <p><strong>Explanation:</strong> Use <code>WHERE</code> to limit rows going into <code>GROUP BY</code>. Use <code>HAVING</code> to constrain aggregated outcomes.</p>
+        <pre><code>SELECT CategoryID, SUM(Amount) AS TotalSales
+FROM Sales
+WHERE OrderDate &gt;= '2025-01-01' AND OrderDate &lt; '2026-01-01'
+GROUP BY CategoryID
+HAVING SUM(Amount) &gt; 100000;
+</code></pre>
+      </details>
+
+      <details>
+        <summary>Join Strategies (INNER vs LEFT)</summary>
+        <p><strong>What it is:</strong> Combining data across tables using match-only joins or retaining all left-side rows.</p>
+        <p><strong>Explanation:</strong> <em>Inner</em> joins keep only matches. <em>Left</em> joins keep all left rows with NULLs for missing right-side matches.</p>
+        <pre><code>SELECT c.CustomerID, c.Name, o.OrderID
+FROM Customers c
+LEFT JOIN Orders o ON o.CustomerID = c.CustomerID;
+</code></pre>
+      </details>
+
+      <details>
+        <summary>Combining Sets (UNION vs UNION ALL)</summary>
+        <p><strong>What it is:</strong> Stacking compatible result sets with or without de-duplication.</p>
+        <p><strong>Explanation:</strong> <code>UNION</code> removes duplicates (extra sort/distinct). <code>UNION ALL</code> keeps all rows (faster).</p>
+        <pre><code>SELECT Email FROM Leads
+UNION ALL
+SELECT Email FROM Contacts;
+</code></pre>
+      </details>
+
+      <details>
+        <summary>Handling NULLs & Defaulting (COALESCE/ISNULL)</summary>
+        <p><strong>What it is:</strong> Working with unknown values and providing fallbacks in projections.</p>
+        <p><strong>Explanation:</strong> Comparisons with NULL yield unknown; use <code>IS NULL</code> checks and <code>COALESCE</code>/<code>ISNULL</code> to display defaults.</p>
+        <pre><code>SELECT COALESCE(Phone, 'N/A') AS PhoneDisplay
+FROM Contacts;
+</code></pre>
+      </details>
+
+      <details>
+        <summary>Window Functions (Rankings & Running Totals)</summary>
+        <p><strong>What it is:</strong> Per-row analytics over a defined window without collapsing rows.</p>
+        <p><strong>Explanation:</strong> Use <code>ROW_NUMBER</code>, <code>RANK</code>, and <code>SUM() OVER()</code> for top-N, rankings, and moving averages.</p>
+        <pre><code>SELECT LineID, MonthStart,
+       SUM(Units) OVER (PARTITION BY LineID ORDER BY MonthStart
+                        ROWS BETWEEN 5 PRECEDING AND CURRENT ROW) AS Rolling6Mo
+FROM ProductionFacts;
+</code></pre>
+      </details>
+
+      <details>
+        <summary>Indexing Fundamentals (Clustered vs Nonclustered)</summary>
+        <p><strong>What it is:</strong> Physical row order vs separate pointer structures.</p>
+        <p><strong>Explanation:</strong> Clustered index defines row order (one per table). Nonclustered indexes support search/lookup and can be covering.</p>
+        <pre><code>CREATE CLUSTERED INDEX CX_Orders_OrderID ON Orders(OrderID);
+CREATE NONCLUSTERED INDEX IX_Orders_CreatedAt
+ON Orders(CreatedAt)
+INCLUDE (OrderID, CustomerID, OrderAmount);
+</code></pre>
+      </details>
+
+      <details>
+        <summary>SARGability & Predicate Design</summary>
+        <p><strong>What it is:</strong> Making filters searchable via indexes.</p>
+        <p><strong>Explanation:</strong> Avoid functions on columns; prefer range predicates and prefix LIKE to keep seeks.</p>
+        <pre><code>SELECT *
+FROM Orders
+WHERE CreatedAt &gt;= @Start AND CreatedAt &lt; @End
+AND Name LIKE @Term + '%';
+</code></pre>
+      </details>
+
+      <details>
+        <summary>Covering Indexes (INCLUDE for Performance)</summary>
+        <p><strong>What it is:</strong> Indexes that contain all columns needed by a query.</p>
+        <p><strong>Explanation:</strong> Including select-list columns avoids key lookups and reduces IO.</p>
+        <pre><code>CREATE INDEX IX_Customers_Search
+ON Customers(Name, Email)
+INCLUDE (CustomerID, CreatedAt);
+</code></pre>
+      </details>
+
+      <details>
+        <summary>Diagnosing Slow Queries (Execution Plans & DMVs)</summary>
+        <p><strong>What it is:</strong> Tools and views for measuring query performance.</p>
+        <p><strong>Explanation:</strong> Inspect plans for scans/lookups/join types; use DMVs to find high-cost statements.</p>
+        <pre><code>SELECT TOP 20 total_elapsed_time, total_logical_reads, execution_count,
+       SUBSTRING(st.text, 1, 4000) AS sql_text
+FROM sys.dm_exec_query_stats qs
+CROSS APPLY sys.dm_exec_sql_text(qs.sql_handle) st
+ORDER BY total_elapsed_time DESC;
+</code></pre>
+      </details>
+
+      <details>
+        <summary>CTE vs Subquery vs Temp Table</summary>
+        <p><strong>What it is:</strong> Approaches for structuring complex logic.</p>
+        <p><strong>Explanation:</strong> CTEs aid readability/recursion; subqueries inline single use; temp tables materialize intermediates and can be indexed.</p>
+        <pre><code>SELECT * INTO #OrdersStage
+FROM Orders
+WHERE CreatedAt &gt;= @Start AND CreatedAt &lt; @End;
+CREATE INDEX IX_Stage_Customer ON #OrdersStage(CustomerID);
+</code></pre>
+      </details>
+
+      <details>
+        <summary>Data Removal Semantics (DELETE vs TRUNCATE)</summary>
+        <p><strong>What it is:</strong> Row-by-row deletion vs minimal-logged table wipe.</p>
+        <p><strong>Explanation:</strong> DELETE supports WHERE and triggers; TRUNCATE resets identity, requires permissions, minimal logging.</p>
+      </details>
+
+      <details>
+        <summary>Upserts & Caveats (MERGE)</summary>
+        <p><strong>What it is:</strong> Insert/update in one statement.</p>
+        <p><strong>Explanation:</strong> Practical upsert with caution; prefer explicit patterns where reliability is paramount.</p>
+        <pre><code>MERGE dbo.Customers AS tgt
+USING (SELECT @CustomerID AS CustomerID, @Email AS Email) AS src
+ON tgt.CustomerID = src.CustomerID
+WHEN MATCHED THEN UPDATE SET Email = src.Email
+WHEN NOT MATCHED THEN INSERT (CustomerID, Email) VALUES (src.CustomerID, src.Email);
+</code></pre>
+      </details>
+
+      <details>
+        <summary>Routines & Reuse (Stored Procedures vs Functions)</summary>
+        <p><strong>What it is:</strong> Procedural units vs composable expressions.</p>
+        <p><strong>Explanation:</strong> Procedures can change data/transactions; functions (especially inline TVFs) are ideal for reusable logic within queries.</p>
+      </details>
+
+      <details>
+        <summary>Reliability Guarantees (ACID & Isolation Levels)</summary>
+        <p><strong>What it is:</strong> Transaction properties and isolation modes.</p>
+        <p><strong>Explanation:</strong> Choose isolation to balance consistency vs concurrency (Snapshot for read-heavy workloads).</p>
+        <pre><code>SET TRANSACTION ISOLATION LEVEL SNAPSHOT;
+BEGIN TRAN;
+-- statements
+COMMIT;
+</code></pre>
+      </details>
+
+      <details>
+        <summary>Deadlock Prevention Patterns</summary>
+        <p><strong>What it is:</strong> Strategies to avoid cyclical waits.</p>
+        <p><strong>Explanation:</strong> Consistent object access order, short transactions, targeted locks for hot rows.</p>
+        <pre><code>UPDATE Accounts WITH (ROWLOCK, UPDLOCK)
+SET Balance = Balance + @Amount
+WHERE AccountID = @AccountID;
+</code></pre>
+      </details>
+
+      <details>
+        <summary>Automatic Rollback on Errors (XACT_ABORT)</summary>
+        <p><strong>What it is:</strong> Session setting to auto-rollback on run-time errors.</p>
+        <p><strong>Explanation:</strong> Improves reliability in multi-statement procedures.</p>
+      </details>
+
+      <details>
+        <summary>Data Type Choices (NVARCHAR vs VARCHAR)</summary>
+        <p><strong>What it is:</strong> Unicode vs non-Unicode storage.</p>
+        <p><strong>Explanation:</strong> Use NVARCHAR for multilingual names/addresses; VARCHAR for ASCII-only data to save space.</p>
+      </details>
+
+      <details>
+        <summary>Date/Time Precision (DATETIME2 & UTC)</summary>
+        <p><strong>What it is:</strong> Modern precise timestamping.</p>
+        <p><strong>Explanation:</strong> Prefer DATETIME2; store UTC and localize in the app layer.</p>
+        <pre><code>ALTER TABLE Orders ADD CreatedAtUtc DATETIME2(3) NOT NULL DEFAULT SYSUTCDATETIME();
+</code></pre>
+      </details>
+
+      <details>
+        <summary>Uniqueness & Keys (Primary Key vs Unique)</summary>
+        <p><strong>What it is:</strong> Identity of a row vs additional uniqueness constraints.</p>
+        <p><strong>Explanation:</strong> PK: non-null unique identifier. Unique: enforces non-duplicate values, may allow NULL depending on design.</p>
+      </details>
+
+      <details>
+        <summary>Normalization (3NF) & When to Denormalize</summary>
+        <p><strong>What it is:</strong> Structuring data to remove redundancy.</p>
+        <p><strong>Explanation:</strong> Keep dependencies on keys; denormalize for performance/BI with care.</p>
+      </details>
+
+      <details>
+        <summary>Pagination Strategies (OFFSET/FETCH & Keyset)</summary>
+        <p><strong>What it is:</strong> Efficient page retrieval for large sets.</p>
+        <p><strong>Explanation:</strong> Use an indexed sort column; prefer keyset pagination for very deep pages.</p>
+        <pre><code>SELECT OrderID, CustomerID, CreatedAt
+FROM Orders
+ORDER BY CreatedAt DESC
+OFFSET (@Page - 1) * @PageSize ROWS FETCH NEXT @PageSize ROWS ONLY;
+</code></pre>
+      </details>
+
+      <details>
+        <summary>Data Quality (Deduplicate Contacts)</summary>
+        <p><strong>What it is:</strong> Identifying and managing duplicates in CRM-style datasets.</p>
+        <p><strong>Explanation:</strong> Group by key attributes (e.g., email) and apply survivorship rules.</p>
+        <pre><code>WITH Dups AS (
+  SELECT Email FROM Contacts WHERE Email IS NOT NULL
+  GROUP BY Email HAVING COUNT(*) &gt; 1
+)
+SELECT c.*
+FROM Contacts c
+JOIN Dups d ON d.Email = c.Email
+ORDER BY c.Email, c.CreatedAt DESC;
+</code></pre>
+      </details>
+
+      <details>
+        <summary>Incremental Loads (Watermark Pattern)</summary>
+        <p><strong>What it is:</strong> Loading only changed rows into analytics layers.</p>
+        <p><strong>Explanation:</strong> Track last successful timestamp in a control table and filter by it.</p>
+        <pre><code>DECLARE @LastWatermark DATETIME2(3) = (
+  SELECT LastValue FROM Control WHERE Name='ContactsLastLoad'
+);
+SELECT * FROM Contacts WHERE LastUpdatedUtc &gt; @LastWatermark;
+</code></pre>
+      </details>
+
+      <details>
+        <summary>Least-Privilege Access (Roles & Views)</summary>
+        <p><strong>What it is:</strong> Secure data access via roles and abstractions.</p>
+        <p><strong>Explanation:</strong> Grant to roles; expose reporting via views or stored procedures.</p>
+        <pre><code>CREATE ROLE ReportingRole;
+GRANT SELECT ON dbo.ContactSummary TO ReportingRole;
+EXEC sp_addrolemember 'ReportingRole', 'bi_analyst';
+</code></pre>
+      </details>
+
+      <details>
+        <summary>Parameter Sniffing & Mitigations</summary>
+        <p><strong>What it is:</strong> Cached plan issues due to skewed parameter distributions.</p>
+        <p><strong>Explanation:</strong> Use <code>OPTION (RECOMPILE)</code> or <code>OPTIMIZE FOR</code> to tailor plans for current inputs.</p>
+        <pre><code>SELECT * FROM Orders WHERE CustomerID = @CustomerID
+OPTION (RECOMPILE);
+</code></pre>
+      </details>
+
+    </div>
+
+     <div class="card">
+      <h2>Portfolio — Projects & Queries</h2>
+
+      <details>
+        <summary>Idea2Network (2025) — API Pagination & SARGable Filters</summary>
+        <p><strong>Context:</strong> Next.js + .NET Core API backed by Azure SQL. Required efficient server-side pagination and search with minimal CPU and IO.</p>
+        <div class="section-title">Key Query (Stored Procedure)</div>
+        <pre><code>CREATE OR ALTER PROCEDURE dbo.GetCustomersPaged
+  @Search nvarchar(100) = NULL,
+  @Page int = 1,
+  @PageSize int = 25
+AS
+BEGIN
+  SET NOCOUNT ON;
+
+  ;WITH Filtered AS (
+    SELECT c.CustomerID, c.Name, c.Email, c.CreatedAt
+    FROM dbo.Customers AS c
+    WHERE (@Search IS NULL
+           OR c.Name LIKE @Search + '%'
+           OR c.Email LIKE @Search + '%')
+  )
+  SELECT CustomerID, Name, Email, CreatedAt
+  FROM Filtered
+  ORDER BY CreatedAt DESC
+  OFFSET (@Page-1) * @PageSize ROWS FETCH NEXT @PageSize ROWS ONLY;
+END;
+</code></pre>
+        <p><strong>Why:</strong> Uses an indexed <code>CreatedAt</code> for deterministic paging and SARGable prefix-<code>LIKE</code> filters (maintains index seek).</p>
+        <div class="section-title">Indexing</div>
+        <pre><code>-- Composite index supporting seek by Name/Email prefix and order by CreatedAt
+CREATE INDEX IX_Customers_NameEmail_CreatedAt
+ON dbo.Customers (Name, Email, CreatedAt);
+</code></pre>
+        <p><strong>Result:</strong> Reduced average page latency under load; stable CPU by avoiding non-SARGable patterns like <code>LOWER(Name)</code> or <code>%term%</code>.</p>
+      </details>
+
+      <details>
+        <summary>Meghna Bank (2019–2023) — Concurrency-safe Balance Update</summary>
+        <p><strong>Context:</strong> High-volume transaction system requiring strict consistency and minimal deadlocks.</p>
+        <div class="section-title">Pattern</div>
+        <pre><code>CREATE OR ALTER PROCEDURE dbo.ApplyLedgerEntry
+  @AccountID bigint,
+  @Amount decimal(19,4),
+  @Ref nvarchar(50)
+AS
+BEGIN
+  SET NOCOUNT ON;
+  SET XACT_ABORT ON;
+  BEGIN TRAN;
+
+  -- Lock the row to serialize balance updates
+  UPDATE a
+    SET a.Balance = a.Balance + @Amount
+  FROM dbo.Accounts AS a WITH (ROWLOCK, UPDLOCK)
+  WHERE a.AccountID = @AccountID;
+
+  INSERT INTO dbo.Ledger (AccountID, Amount, Ref, CreatedAt)
+  VALUES (@AccountID, @Amount, @Ref, SYSUTCDATETIME());
+
+  COMMIT TRAN;
+END;
+</code></pre>
+        <p><strong>Why:</strong> <code>UPDLOCK</code> ensures writers queue rather than deadlock; <code>XACT_ABORT</code> guarantees rollback on errors.</p>
+        <div class="section-title">Monitoring Slow Queries</div>
+        <pre><code>SELECT TOP 50 *
+FROM sys.dm_exec_query_stats AS qs
+CROSS APPLY sys.dm_exec_sql_text(qs.sql_handle) AS st
+ORDER BY qs.total_elapsed_time DESC;
+</code></pre>
+        <p><strong>Outcome:</strong> Reduced write conflicts and improved predictability under peak loads.</p>
+      </details>
+
+      <details>
+        <summary>CSL Software (2018–2019) — BOM Explosion with Recursive CTE</summary>
+        <p><strong>Context:</strong> Apparel ERP needed multi-level BOM expansion for material requirements planning.</p>
+        <div class="section-title">Recursive CTE</div>
+        <pre><code>WITH RECURSIVE_BOM AS (
+  SELECT ParentItemID, ComponentItemID, QtyPer AS LevelQty, 0 AS Level
+  FROM dbo.BOM
+  WHERE ParentItemID = @RootItemID
+  UNION ALL
+  SELECT b.ParentItemID, b.ComponentItemID,
+         rb.LevelQty * b.QtyPer, rb.Level + 1
+  FROM dbo.BOM AS b
+  JOIN RECURSIVE_BOM AS rb
+    ON b.ParentItemID = rb.ComponentItemID
+)
+SELECT ComponentItemID, SUM(LevelQty) AS TotalQtyRequired
+FROM RECURSIVE_BOM
+GROUP BY ComponentItemID;
+</code></pre>
+        <p><strong>Why:</strong> Computes cumulative component quantities across levels; supports planning and procurement.</p>
+      </details>
+
+      <details>
+        <summary>KDS Garments (2016–2017) — Reporting with Window Functions</summary>
+        <p><strong>Context:</strong> Production analytics for monthly throughput and defects.</p>
+        <div class="section-title">Window Functions</div>
+        <pre><code>SELECT LineID, MonthStart,
+       SUM(Units) AS UnitsInMonth,
+       SUM(Units) OVER (PARTITION BY LineID ORDER BY MonthStart
+                        ROWS BETWEEN 5 PRECEDING AND CURRENT ROW) AS Rolling6Mo
+FROM dbo.ProductionFacts
+WHERE MonthStart BETWEEN @Start AND @End
+GROUP BY LineID, MonthStart
+ORDER BY LineID, MonthStart;
+</code></pre>
+        <p><strong>Why:</strong> Provides rolling KPIs without self-joins; ideal for BI feeds.</p>
+      </details>
+
+      <details>
+        <summary>UTC Associates (2017–2018) — Rewriting a Correlated Subquery</summary>
+        <p><strong>Context:</strong> Slow page due to correlated subquery per row.</p>
+        <div class="section-title">Before → After</div>
+        <pre><code>-- BEFORE (per-row lookup)
+SELECT o.OrderID, o.CustomerID,
+       (SELECT SUM(Amount) FROM Payments p WHERE p.OrderID = o.OrderID)
+FROM Orders o;
+
+-- AFTER (join + aggregate)
+SELECT o.OrderID, o.CustomerID, SUM(p.Amount) AS TotalPaid
+FROM Orders o
+LEFT JOIN Payments p ON p.OrderID = o.OrderID
+GROUP BY o.OrderID, o.CustomerID;
+</code></pre>
+        <p><strong>Why:</strong> Converts N correlated lookups into a single set-based aggregation; enables index seeks and reduces logical reads.</p>
+      </details>
+
+      <details>
+        <summary>Youngone CEPZ (2015–2016) — Attendance Analytics</summary>
+        <p><strong>Context:</strong> HRMS dashboards for daily attendance and tardiness.</p>
+        <div class="section-title">Attendance Summary</div>
+        <pre><code>SELECT EmpID,
+       CAST(AttendanceDate AS date) AS Day,
+       COUNT(*) AS Punches,
+       MIN(PunchTime) AS FirstIn,
+       MAX(PunchTime) AS LastOut,
+       SUM(CASE WHEN DATEPART(HOUR, PunchTime) > 9 THEN 1 ELSE 0 END) AS LatePunches
+FROM dbo.Attendance
+WHERE AttendanceDate BETWEEN @Start AND @End
+GROUP BY EmpID, CAST(AttendanceDate AS date);
+</code></pre>
+        <p><strong>Why:</strong> Supports KPIs for punctuality and shift coverage.</p>
+      </details>
+    </div>
+
+  </div>
+</body>
+</html>
