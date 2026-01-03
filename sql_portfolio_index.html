@@ -473,7 +473,7 @@ GROUP BY EmpID, CAST(AttendanceDate AS date);
       <details><summary>Security &amp; Roles</summary><p>What it is: Grant least privilege using roles.</p><p>Why: Protect sensitive data and enforce access control.</p><pre><code>CREATE ROLE ReportingRole;
       GRANT SELECT ON dbo.SalesSummary TO ReportingRole;</code></pre></details>
 
-      <details><summary>Monitoring &amp; Alerts</summary><p>What it is: Use DMVs and alerts to monitor performance.</p><p>Why: Detect issues early and maintain SLAs.</p><pre><code>SELECT * FROM sys.dm_exec_requests WHERE status = 'running';</code></pre></details><details><summary>High Availability Concepts</summary><p>What it is: Techniques like AlwaysOn Availability Groups or Log Shipping.</p><p>Why: Ensures uptime and resilience in enterprise environments.</p><pre><code>Conceptual topic: configure replicas and automatic failover.</code></pre></details></div>
+      <details><summary>Monitoring &amp; Alerts</summary><p>What it is: Use DMVs and alerts to monitor performance.</p><p>Why: Detect issues early and maintain SLAs.</p><pre><code>SELECT * FROM sys.dm_exec_requests WHERE status = 'running';</code></pre></details></div>
 
     </div>
 
